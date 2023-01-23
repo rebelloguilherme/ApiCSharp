@@ -1,4 +1,4 @@
-﻿namespace ControleDeDespesas.Models
+﻿namespace ControleDeDespesas.Domain.Models
 {
     public class Person : Entity
     {

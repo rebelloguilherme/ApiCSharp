@@ -16,7 +16,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Controle de despesas v1"));
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+
+app.UseRouting();
 
 app.UseAuthorization();
 

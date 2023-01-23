@@ -1,4 +1,4 @@
-﻿using ControleDeDespesas.Models;
+﻿using ControleDeDespesas.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -11,9 +11,15 @@ namespace ControleDeDespesas.Controllers
     {
         //List all People
         [HttpGet]
-        public IEnumerable<Person> Get()
+        public ActionResult<List<Person>> Get()
         {
-            return new List<Person>();
+            var people = new List<Person>();
+            var role = new Role();
+            role.Permission = Permission.Admin;
+
+            var person = new Person("0123456789", "Edivan", "012345", role);
+            people.Add(person);
+            return people;
         }
 
         //new Person
@@ -25,8 +31,40 @@ namespace ControleDeDespesas.Controllers
         }
 
         //Update a Person
+        [HttpPost]
+        public JsonContent Update(Person person)
+        {
+            //seach person related
+            //person that suposed to be found
+            var personFound = new Person("0123456789", "Edivan", "012345", new Role() { Permission = Permission.Admin });
+
+            if (person.Id == personFound.Id)
+            {
+                if (person.Name != personFound.Name)
+                {
+                    personFound.Name = person.Name;
+                }
+                if (person.Password != personFound.Password)
+                {
+                    personFound.Password = person.Password;
+                }
+            }
+            return JsonContent.Create(personFound);
+        }
 
         //Remove a Person
+        [HttpPost]
+        public JsonContent Delete(Guid id)
+        {
+            //seach person related
+            //person that suposed to be found
+            var personFound = new Person("0123456789", "Edivan", "012345", new Role() { Permission = Permission.Admin });
 
+            if (personFound.Id == id)
+            {
+                return JsonResult(
+            }
+            return JsonContent.Create(personFound);
+        }
     }
 }
