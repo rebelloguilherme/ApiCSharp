@@ -1,4 +1,5 @@
 ﻿using ControleDeDespesas.Domain.Models;
+using ControleDeDespesas.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -13,6 +14,8 @@ namespace ControleDeDespesas.Controllers
         [HttpGet]
         public ActionResult<List<Person>> Get()
         {
+
+            throw new ValidationException("name", "Campo nome é obrigatório");
             var people = new List<Person>();
             var role = new Role();
             role.Permission = Permission.Admin;
@@ -31,7 +34,7 @@ namespace ControleDeDespesas.Controllers
         }
 
         //Update a Person
-        [HttpPost]
+        [HttpPut]
         public JsonContent Update(Person person)
         {
             //seach person related
@@ -48,13 +51,16 @@ namespace ControleDeDespesas.Controllers
                 {
                     personFound.Password = person.Password;
                 }
+
+                //Invalido
+                
             }
             return JsonContent.Create(personFound);
         }
 
         //Remove a Person
-        [HttpPost]
-        public JsonContent Delete(Guid id)
+        [HttpDelete]
+        public ActionResult Delete(Guid id)
         {
             //seach person related
             //person that suposed to be found
@@ -62,9 +68,9 @@ namespace ControleDeDespesas.Controllers
 
             if (personFound.Id == id)
             {
-                return JsonResult(
+                return new JsonResult(personFound);
             }
-            return JsonContent.Create(personFound);
+            return null;
         }
     }
 }

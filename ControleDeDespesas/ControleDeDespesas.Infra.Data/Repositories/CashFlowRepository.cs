@@ -16,72 +16,34 @@ namespace ControleDeDespesas.Infra.Data.Repositories
 
         public async Task<CashFlow> CreateAsync(CashFlow cashFlow)
         {
-            try
-            {
-                _cashFlowContext.Add(cashFlow);
-                await _cashFlowContext.SaveChangesAsync();
-                return cashFlow;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            _cashFlowContext.Add(cashFlow);
+            await _cashFlowContext.SaveChangesAsync();
+            return cashFlow;
         }
 
         public async Task<CashFlow> DeleteAsync(CashFlow cashFlow)
         {
-            try
-            {
-                _cashFlowContext.Remove(cashFlow);
-                await _cashFlowContext.SaveChangesAsync();
-                return cashFlow;
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
+            _cashFlowContext.Remove(cashFlow);
+            await _cashFlowContext.SaveChangesAsync();
+            return cashFlow;
         }
 
         public async Task<IEnumerable<CashFlow>> GetCashFlowsAsync()
         {
-            try
-            {
-                return await _cashFlowContext.CashFlows.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _cashFlowContext.CashFlows.ToListAsync();
         }
 
         public async Task<CashFlow> GetByIdAsync(Guid id)
         {
-            try
-            {
-                return await _cashFlowContext.CashFlows.FindAsync(id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _cashFlowContext.CashFlows.FindAsync(id);
         }
 
         public async Task<CashFlow> UpdateAsync(CashFlow cashFlow)
         {
-            try
-            {
-                _cashFlowContext.Update(cashFlow);
-                await _cashFlowContext.SaveChangesAsync();
-                return cashFlow;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            _cashFlowContext.Update(cashFlow);
+            await _cashFlowContext.SaveChangesAsync();
+            return cashFlow;
         }
     }
-
-
-
 }
